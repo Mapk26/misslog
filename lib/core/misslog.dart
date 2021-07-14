@@ -32,7 +32,7 @@ class MissLog{
   static w(String message, {String tag}) => _log(message, logType: LogType.warning, tag: tag);
 
   static void _printWrapped(String text, currentPen) {
-    final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+    final pattern = RegExp('.{1,100}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((match) => dev.log(currentPen(match.group(0)), name: 'MissLog'));
   } 
     
@@ -84,8 +84,7 @@ class MissLog{
       when = DateTime.now().toIso8601String().split('T')[1];
 
     dev.log(currentPen('$topLeftCorner──────────────────────────────────────── ' + when), name: 'MissLog',);
-    dev.log(currentPen(' $icon ==> $tagger: $message'), name: 'MissLog');
-    // _printWrapped(currentPen(' $icon ==> $tagger: $message'), currentPen);
+    _printWrapped(currentPen(' $icon ==> $tagger: $message'), currentPen);
     dev.log(currentPen('$bottomLeftCorner────────────────────────────────────────'), name: 'MissLog');
 
   }
