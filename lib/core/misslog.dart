@@ -26,10 +26,10 @@ class MissLog{
   static const doubleDivider = "─";
   static const singleDivider = "┄";
 
-  static i(String message, {String tag}) => _log(message, logType: LogType.info, tag: tag);
-  static e(String message, {String tag}) => _log(message, logType: LogType.error, tag: tag);
-  static d(String message, {String tag}) => _log(message, logType: LogType.debug, tag: tag);
-  static w(String message, {String tag}) => _log(message, logType: LogType.warning, tag: tag);
+  static i(String message, {String? tag}) => _log(message, logType: LogType.info, tag: tag);
+  static e(String message, {String? tag}) => _log(message, logType: LogType.error, tag: tag);
+  static d(String message, {String? tag}) => _log(message, logType: LogType.debug, tag: tag);
+  static w(String message, {String? tag}) => _log(message, logType: LogType.warning, tag: tag);
 
   static void _printWrapped(String text, currentPen) {
     final pattern = RegExp('.{1,100}'); // 800 is the size of each chunk
@@ -37,7 +37,7 @@ class MissLog{
   } 
     
   static void _log(String message, {
-    String tag,
+    String? tag,
     LogType logType=LogType.debug,
     bool hideTime=false,
   }){
@@ -76,6 +76,7 @@ class MissLog{
         break;
       
       default:
+        currentPen = AnsiPen()..green(bold: false);
         icon = levelIcon[0];
     }
 
@@ -84,7 +85,7 @@ class MissLog{
       when = DateTime.now().toIso8601String().split('T')[1];
 
     dev.log(currentPen('$topLeftCorner──────────────────────────────────────── ' + when), name: 'MissLog',);
-    _printWrapped(currentPen(' $icon ==> $tagger: $message'), currentPen);
+    dev.log(currentPen(' $icon ==> $tagger: $message'), name: 'MissLog');
     dev.log(currentPen('$bottomLeftCorner────────────────────────────────────────'), name: 'MissLog');
 
   }
